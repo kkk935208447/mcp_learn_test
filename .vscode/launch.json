@@ -1,0 +1,32 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python uv 调试1 - basic",
+            "type": "debugpy",
+            "request": "launch",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "python": "${workspaceFolder}/.venv/bin/python",  // 虚拟环境的 Python 解释器路径
+            // 启动时切换工作目录到子目录
+            "cwd": "${workspaceFolder}/00南哥教程目录/MCPTest-main/nangeAGICode/basic",
+            "program": "${file}",  // .py脚本文件相对子目录路径位置，${file} 表示当前活动的文件
+            "args": []
+        },
+        {
+            "name": "Python uv 调试2 - filesystem_basic",
+            "type": "debugpy",
+            "request": "launch",
+            "console": "integratedTerminal",
+            "justMyCode": false,
+            "python": "${workspaceFolder}/.venv/bin/python",  // 虚拟环境的 Python 解释器路径
+            // 启动时切换工作目录到子目录
+            "cwd": "${workspaceFolder}/00南哥教程目录/MCPTest-main/nangeAGICode/filesystem_basic",
+            "program": "${file}",  // .py脚本文件相对子目录路径位置，${file} 表示当前活动的文件
+            "args": []
+        }
+    ]
+}

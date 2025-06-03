@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/janetjiang/Desktop/agi_code/MCPTest/nangeAGICode/mysql_filesystem_chat"]
+    },
+    "mysql": {
+      "command": "python",
+      "args": ["server.py"],
+      "env": null
+    }
+  }
+}
