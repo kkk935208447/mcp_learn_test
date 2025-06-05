@@ -24,6 +24,7 @@ server = Server("example-server")
 # 注册一个回调函数，返回服务器支持的 prompt 列表
 @server.list_prompts()
 async def handle_list_prompts() -> list[types.Prompt]:
+    # print()
     # 返回一个包含 Prompt 对象的列表
     return [
         # 定义了一个prompt，包含以下信息

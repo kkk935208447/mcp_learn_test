@@ -9,7 +9,7 @@
             "type": "debugpy",
             "request": "launch",
             "console": "integratedTerminal",
-            "justMyCode": false,
+            "justMyCode": true,
             "python": "${workspaceFolder}/.venv/bin/python",  // 虚拟环境的 Python 解释器路径
             // 启动时切换工作目录到子目录
             "cwd": "${workspaceFolder}/00南哥教程目录/MCPTest-main/nangeAGICode/basic",
@@ -21,10 +21,22 @@
             "type": "debugpy",
             "request": "launch",
             "console": "integratedTerminal",
-            "justMyCode": false,
+            "justMyCode": true,
             "python": "${workspaceFolder}/.venv/bin/python",  // 虚拟环境的 Python 解释器路径
             // 启动时切换工作目录到子目录
             "cwd": "${workspaceFolder}/00南哥教程目录/MCPTest-main/nangeAGICode/filesystem_basic",
+            "program": "${file}",  // .py脚本文件相对子目录路径位置，${file} 表示当前活动的文件
+            "args": []
+        },
+        {
+            "name": "Python uv 我的代码",
+            "type": "debugpy",
+            "request": "launch",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "python": "${workspaceFolder}/.venv/bin/python",  // 虚拟环境的 Python 解释器路径
+            // 启动时切换工作目录到子目录
+            "cwd": "${workspaceFolder}/01mcp基础测试",
             "program": "${file}",  // .py脚本文件相对子目录路径位置，${file} 表示当前活动的文件
             "args": []
         }
