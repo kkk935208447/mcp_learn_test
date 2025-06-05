@@ -135,6 +135,19 @@ async def handle_list_tools() -> list[types.Tool]:
                 "required": ["location"],
                 "additionalProperties": False
             }
+        ),
+        types.Tool(
+            name="multiply",
+            description="用于乘法运算的工具",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "a": {"type": "number", "description": "第一个乘数，值域为实数"},
+                    "b": {"type": "number", "description": "第二个乘数，值域为实数"}
+                },
+                "required": ["a", "b"],
+                "additionalProperties": False
+            }
         )
     ]
 
@@ -145,6 +158,9 @@ def add(a, b):
 
 def subtract(a, b):
     return float(a) - float(b)
+
+def multiply(a, b):
+    return float(a) * float(b)
 
 def get_weather(location):
     return f"{location}：晴，温度25℃"
@@ -157,7 +173,7 @@ async def handle_call_tool(
     arguments: dict[str, Any] 
 ) -> list[types.TextContent]:
     
-    if name not in ["add", "subtract", "get_weather"]:
+    if name not in ["add", "subtract", "multiply", "get_weather"]:
         raise ValueError(f"Unknown tool: {name}")
     
     # 调用工具函数并将结果作为文本内容返回, globals() 是一个内置函数，它返回一个字典，表示当前全局符号表。
