@@ -131,7 +131,7 @@ async def call_mcp():
     # 连接到 mcp 服务器
     async with stdio_client(server_params) as (read_stream, write_stream):
         async with ClientSession(read_stream, write_stream) as session:
-            await session.initialize()
+            capabilities = await session.initialize()
 
             # 列出prompt
             prompts = await session.list_prompts()
