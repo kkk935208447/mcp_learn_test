@@ -124,7 +124,7 @@ async def call_mcp():
     # 获得 mcp 客户端 参数
     server_params = StdioServerParameters(
         command="python",
-        args=["server1.py"],
+        args=["fastmcp高级api构建server2.py"],
         env=None
     )
 

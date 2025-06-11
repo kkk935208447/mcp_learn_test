@@ -23,7 +23,7 @@ server_params = StdioServerParameters(
     # 服务器执行的命令，这里是 python
     command="python",
     # 启动命令的附加参数，这里是运行 example_server.py
-    args=["server1.py"],
+    args=["fastmcp高级api构建server2.py"],
     # 环境变量，默认为 None，表示使用当前环境变量
     # env=None
 )
