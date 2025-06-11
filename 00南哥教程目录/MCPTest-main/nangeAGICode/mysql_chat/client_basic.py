@@ -1,4 +1,9 @@
-# Node.js 服务器为文件系统操作实现模型上下文协议 (MCP)
+import os
+# 定义一个用于操作的目录路径
+DirPath = os.path.dirname(os.path.abspath(__file__))
+os.chdir(DirPath)
+print("当前工作目录:", os.getcwd())
+
 
 # ClientSession 表示客户端会话，用于与服务器交互
 # StdioServerParameters 定义与服务器的 stdio 连接参数

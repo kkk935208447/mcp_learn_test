@@ -1,13 +1,20 @@
+import os
+# 定义一个用于操作的目录路径
+DirPath = os.path.dirname(os.path.abspath(__file__))
+os.chdir(DirPath)
+print("当前工作目录:", os.getcwd())
+
+
 import asyncio
 import json
 import logging
-import os
 import shutil
 from typing import Dict, List, Optional, Any
 import requests
 from dotenv import load_dotenv
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
+from pprint import pprint
 
 
 
@@ -96,7 +103,7 @@ class Server:
     # 初始化服务器连接
     async def initialize(self) -> None:
         # server_params: 创建服务器参数对象
-        # command: 如果配置中命令是 npx，使用系统路径查找，否则直接使用配置值
+        # command: 如果配置中命令是 npx，使用 shutil.which() 自动查找系统环境变量 PATH 中的 npx 可执行文件绝对路径，避免直接调用 npx 可能出现的 "command not found" 错误
         # args: 从配置中获取命令行参数
         # env: 合并系统环境变量和配置中的自定义环境变量
         server_params = StdioServerParameters(
@@ -213,19 +220,35 @@ class Tool:
     # 将工具的信息格式化为一个字符串，适合语言模型（LLM）使用
     # 返回值: 包含工具名称、描述和参数信息的格式化字符串
     def format_for_llm(self) -> str:
-        args_desc = []
-        if 'properties' in self.input_schema:
-            for param_name, param_info in self.input_schema['properties'].items():
-                arg_desc = f"- {param_name}: {param_info.get('description', 'No description')}"
-                if param_name in self.input_schema.get('required', []):
-                    arg_desc += " (required)"
-                args_desc.append(arg_desc)
-        
+        # args_desc = []
+        # if 'properties' in self.input_schema:
+        #     for param_name, param_info in self.input_schema['properties'].items():
+        #         arg_desc = f"- {param_name}: {param_info.get('description', 'No description')}"
+        #         if param_name in self.input_schema.get('required', []):
+        #             arg_desc += " (required)"
+        #         args_desc.append(arg_desc)
+        # # chr(10)是换行符的ASCII表示
+        # return f"""
+        #         Tool: {self.name}
+        #         Description: {self.description}
+        #         Arguments:
+        #         {chr(10).join(args_desc)}       
+        #         """
+    
+
+
+        argu = {
+            "type": self.input_schema.get("type", "object"),
+            "properties": self.input_schema.get("properties", {}),
+            "required": self.input_schema.get("required", []),
+            "additionalProperties": self.input_schema.get("additionalProperties", False)
+        }
+
         return f"""
                 Tool: {self.name}
                 Description: {self.description}
                 Arguments:
-                {chr(10).join(args_desc)}
+                {json.dumps(argu) + chr(10)}
                 """
 
 
@@ -343,7 +366,7 @@ class ChatSession:
                             return f"Tool execution result: {result}"
                         # 如果无法找到指定的工具或遇到错误，返回相应的错误信息
                         except Exception as e:
-                            error_msg = f"Error executing tool: {str(e)}"
+                            error_msg = f"Error executing tool: {str(e)}" 
                             logging.error(error_msg)
                             return error_msg
                 return f"No server found with tool: {tool_call['tool']}"
@@ -406,6 +429,7 @@ class ChatSession:
                 }
             ]
 
+            logging.info(f"当前model: {self.llm_client.chat_model}")
             # 交互循环
             while True:
                 try:
@@ -435,6 +459,7 @@ class ChatSession:
                         messages.append({"role": "assistant", "content": final_response})
                     else:
                         messages.append({"role": "assistant", "content": llm_response})
+                    # print(messages)
 
                 # 处理 KeyboardInterrupt，允许用户中断会话
                 except KeyboardInterrupt:

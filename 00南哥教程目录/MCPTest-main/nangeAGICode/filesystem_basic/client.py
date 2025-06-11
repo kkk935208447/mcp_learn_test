@@ -1,5 +1,11 @@
 # Node.js 服务器为文件系统操作实现模型上下文协议 (MCP)
 
+import os
+# 定义一个用于操作的目录路径
+DirPath = os.path.dirname(os.path.abspath(__file__))
+os.chdir(DirPath)
+print("当前工作目录:", os.getcwd())
+
 # ClientSession 表示客户端会话，用于与服务器交互
 # StdioServerParameters 定义与服务器的 stdio 连接参数
 from mcp import ClientSession, StdioServerParameters
@@ -9,10 +15,6 @@ import asyncio
 
 # 定义与 mcp 协议相关的类型
 import mcp.types as types
-
-
-# 定义一个用于操作的目录路径
-DirPath = "/home/shayuer/document/Agents/mcp_learnning_test/00南哥教程目录/MCPTest-main/nangeAGICode/filesystem_basic"
 
 
 
@@ -35,22 +37,24 @@ async def run():
             # 向服务器发送初始化请求，确保连接准备就绪
             # 建立初始状态，并让服务器返回其功能和版本信息
             capabilities = await session.initialize()
+            print("0 " + "*" * 100)
             # print("capabilities:", capabilities)
             # print("Supported capabilities:", capabilities.capabilities)
 
             # 请求服务器列出所有支持的 tools
             tools = await session.list_tools()
             print("tools:",tools)
+            print("1 " + "*" * 100)
 
             # 文件相关功能测试
-            result = await session.call_tool("list_allowed_directories")
+            # result = await session.call_tool("list_allowed_directories")
             # result = await session.call_tool("create_directory", arguments={"path": "test"})
             # result = await session.call_tool("write_file", arguments={"path": "test/test1.txt","content": "这里是南哥AGI研习社。测试1。" })
             # result = await session.call_tool("write_file", arguments={"path": "test/test1.txt","content": "这里是南哥AGI研习社。测试1plus。" })
             # result = await session.call_tool("write_file", arguments={"path": "test/test2.txt","content": "这里是南哥AGI研习社。测试2。" })
             # result = await session.call_tool("list_directory", arguments={"path": "test"})
             # result = await session.call_tool("read_file", arguments={"path": "test/test1.txt"})
-            # result = await session.call_tool("read_multiple_files", arguments={"paths": ["test/test1.txt","test/test2.txt"]})
+            result = await session.call_tool("read_multiple_files", arguments={"paths": ["test/test1.txt","test/test2.txt"]})
             # result = await session.call_tool("search_files", arguments={"path": "test","pattern": "test1" })
             # result = await session.call_tool("get_file_info", arguments={"path": "test/test1.txt"})
             print("result:",result)

@@ -31,23 +31,23 @@ class StdioServerClient:
     """
     def __init__(self, server_params: StdioServerParameters = server_params):
         # 保存启动参数
-        self.server_params = server_params
+        self.server_params: StdioServerParameters = server_params
 
         # 异步上下文管理对象（context manager object）
         self.client_ctx = None     # 控制标准输入输出流 stdio_client(...)，原本通常配合 async with 使用
-        self.session_ctx = None    # 管理 MCP 客户端会话对象
+        self.session_ctx: ClientSession = None    # 管理 MCP 客户端会话对象
 
         # 底层流和 session
         self.read = None           # 服务端的标准输出流（读取服务端返回数据）
         self.write = None          # 服务端的标准输入流（发送数据到服务端）
-        self.session = None        # 真正的会话对象（ClientSession 实例，用于协议交互）
+        self.session: ClientSession = None        # 真正的会话对象（ClientSession 实例，用于协议交互）
         self.capabilities = None   # 记录服务端返回的能力信息
 
-        # 保护 open/close 的 asyncio.Lock，防止多个并发协程对连接资源状态竞争
-        self._open_lock = asyncio.Lock()
-        self._is_open = False      # 状态位：记录当前是否已开连接
+        # 保护 open/close 的 asyncio.Lock，保证多个并发协程对连接资源是异步安全的
+        self._open_lock: asyncio.Lock = asyncio.Lock()
+        self._is_open = False      # 状态位：标识连接是否已打开
 
-    async def open(self):
+    async def aopen(self):
         """
         手动建立连接，等价于两层 async with:
            async with stdio_client(...) as (read, write):
@@ -72,7 +72,7 @@ class StdioServerClient:
             self.capabilities = await self.session.initialize() # 初始化 handshake，协商能力
             self._is_open = True
 
-    async def close(self):
+    async def aclose(self):
         """
         主动关闭连接。
         关闭顺序与 open 相反，先关闭协议 session，再关闭底层通信流，最后清空状态。
@@ -125,10 +125,17 @@ class StdioServerClient:
 async def main():
     client = StdioServerClient()
     try:
-        await client.open()    # 显式建立与 MCP server 的异步连接
-        await client.list_tools()     # 执行 MCP 相关业务逻辑
+        await client.aopen()  # 显式调用 open() 建立与 MCP server 的异步连接，然后调用工具资源，最后关闭连接
+        tools = await client.get_session.list_tools()   # 通过 MCP 协议调用服务器的工具资源
+        prompts = await client.get_session.list_prompts() # 通过 MCP 协议调用服务器的 prompt 资源
+        capabilities = client.get_capabilities          # 获取服务器能力信息
+        print("tools:", tools)
+        print("prompts:", prompts)
+        print("capabilities:", capabilities)
+
+
     finally:
-        await client.close()   # 无论是否抛异常，最后都需关闭资源，防止资源泄漏
+        await client.aclose()   # 无论是否抛异常，最后都需关闭资源，防止资源泄漏
 
 if __name__ == "__main__":
     # 用 asyncio 事件循环驱动异步 main 入口。标准写法。
