@@ -11,6 +11,10 @@ mcp = FastMCP(
     version="1.1.0"
 )
 
+
+
+
+
 # ======= PROMPT 注册（schema&描述齐全）=======
 
 @mcp.prompt("trans text prompt", description="用于翻译文本的prompt模板，指明源语言和目标语言")
@@ -27,6 +31,9 @@ def python_code_prompt(
 ) -> str:
     """生成Python代码prompt"""
     return f"你是一名专业Python开发者，请根据描述'{arg1}'生成一段高质量Python代码。"
+
+
+
 
 # ======= TOOL 注册（类型&schema友好）=======
 
@@ -64,6 +71,6 @@ def get_weather(
 
 
 if __name__ == "__main__":
-    mode = "stdio"
+    mode = "stdio"  
     print(f"当前运行模式：{mode}, mcp 服务器启动")
     mcp.run(transport=mode)
