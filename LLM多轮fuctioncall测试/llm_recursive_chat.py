@@ -9,6 +9,15 @@ from typing import Any, List, Dict, Optional
 from pprint import pprint
 
 
+import os 
+# 删除环境变量中的代理设置
+proxy_vars = ['http_proxy', 'https_proxy', 'HTTP_PROXY', 'HTTPS_PROXY']
+logger.warning(f"删除环境变量中的代理设置：{proxy_vars}")
+for var in proxy_vars:
+    if var in os.environ:
+        del os.environ[var]
+
+
 # 加载环境变量
 load_dotenv()
 API_KEY = os.getenv("OPENAI_API_KEY")
@@ -90,7 +99,7 @@ class RecursiveLLMClient:
 
                 # 将（本次）LLM的tool_call(messsage)也追加，function call 具体的【多轮】调用步骤见：https://platform.openai.com/docs/guides/function-calling?api-mode=chat
                 _message = choice.message.model_dump()
-                _message["content"] = None   # content 内容重置为None，有些类似qwen3的推理模型content不为空，重置为None
+                # _message["content"] = None   # content 内容重置为None，有些类似qwen3的推理模型content不为空，重置为None
                 messages.append(_message)
 
                 # 按顺序执行全部tool_calls并记录内容

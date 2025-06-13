@@ -1,0 +1,1 @@
+详情见vllm 官网：[vllm 官网](https://docs.vllm.ai/en/latest/examples/online_serving/openai_chat_completion_tool_calls_with_reasoning.html)
