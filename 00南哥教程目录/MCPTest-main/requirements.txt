@@ -34,6 +34,7 @@ matplotlib-inline==0.1.7
 mcp==1.9.2
 mcp-server-fetch==0.6.2
 mdurl==0.1.2
+mysql-connector-python==9.3.0
 nest-asyncio==1.6.0
 openai==1.84.0
 packaging==25.0

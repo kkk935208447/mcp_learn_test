@@ -1,7 +1,21 @@
+import os
+# 定义一个用于操作的目录路径
+DirPath = os.path.dirname(os.path.abspath(__file__))
+os.chdir(DirPath)
+print("当前工作目录:", os.getcwd())
+
+
+# # Remove proxy settings if they exist
+# proxy_vars = ['http_proxy', 'https_proxy', 'HTTP_PROXY', 'HTTPS_PROXY']
+# print(f"删除环境变量中的代理设置：{proxy_vars}")
+# for var in proxy_vars:
+#     if var in os.environ:
+#         del os.environ[var]
+
+
 import asyncio
 import json
 import logging
-import os
 import shutil
 from typing import Dict, List, Optional, Any
 import requests

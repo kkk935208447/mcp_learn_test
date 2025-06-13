@@ -2,7 +2,7 @@
   "mcpServers": {
     "filesystem": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/Users/janetjiang/Desktop/agi_code/MCPPreview/nangeAGICode/search_mysql_filesystem_chat"]
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/home/shayuer/document/Agents/mcp_learnning_test/00南哥教程目录/MCPTest-main/nangeAGICode/search_mysql_filesystem_chat"]
     },
     "mysql_mcp_server": {
       "command": "python",

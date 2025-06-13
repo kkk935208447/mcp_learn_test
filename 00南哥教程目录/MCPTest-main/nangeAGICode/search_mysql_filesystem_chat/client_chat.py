@@ -1,7 +1,13 @@
+import os
+# 定义一个用于操作的目录路径
+DirPath = os.path.dirname(os.path.abspath(__file__))
+os.chdir(DirPath)
+print("当前工作目录:", os.getcwd())
+
+
 import asyncio
 import json
 import logging
-import os
 import shutil
 from typing import Dict, List, Optional, Any
 import requests

@@ -4,7 +4,7 @@
 
 
 
-# 运行
+# 运行 (低level mcp server)
 1. mcp client 端简单测试
 ```bash
 cd 01mcp基础测试 
@@ -22,6 +22,24 @@ uv run server1.py
 cd 01mcp基础测试
 uv run llm_chat_openai库.py
 ```
+
+
+
+# 高level fastmcp api 测试
+- 普通启动
+```bash
+cd 01mcp基础测试 
+uv run fastmcp高级api构建server2.py
+```
+
+
+- 使用mcp dev server 启动（开发dev 模式），注意：低level mcp server 无法使用mcp dev server 启动
+```bash
+cd 01mcp基础测试
+uv run mcp dev fastmcp高级api构建server2.py
+```
+
+
 
 
 

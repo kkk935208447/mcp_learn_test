@@ -13,6 +13,9 @@ results = DDGS().text(
     max_results=5
 )
 
+print(f"原始: {results}")
+
+
 # 拼接字符串
 results = "\n".join(f"{item['title']} - {item['href']} - {item['body']}" for item in results)
 

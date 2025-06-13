@@ -37,24 +37,25 @@ async def run():
             # 向服务器发送初始化请求，确保连接准备就绪
             # 建立初始状态，并让服务器返回其功能和版本信息
             capabilities = await session.initialize()
-            print("capabilities:", capabilities)
+            # print("capabilities:", capabilities)
 
             # 请求服务器列出所有支持的资源
-            # resources = await session.list_resources()
-            # print("resources:",resources)
+            resources = await session.list_resources()
+            print("resources:",resources)
 
             # 获取某具体资源 即某张表中的内容
-            # resource = await session.read_resource('mysql://nange_agi/data')
-            # print("resource:",resource)
+            resource = await session.read_resource('mysql://table1/data')
+            print("resource:",resource)
 
             # 获取可用的工具列表
-            # tools = await session.list_tools()
-            # print("tools:",tools)
+            tools = await session.list_tools()
+            print("tools:",tools)
 
             # 工具功能测试
-            # result = await session.call_tool("execute_sql",{"query":"SHOW TABLES"})
-            # result = await session.call_tool("execute_sql",{"query":"SELECT * FROM nange_agi"})
-            # print("result:",result)
+            result = await session.call_tool("execute_sql",{"query":"SHOW TABLES"})
+            print("result:",result)
+            result = await session.call_tool("execute_sql",{"query":"SELECT * FROM table1"})
+            print("result:",result)
 
 
 if __name__ == "__main__":
