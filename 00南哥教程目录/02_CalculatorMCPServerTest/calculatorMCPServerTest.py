@@ -1,9 +1,18 @@
+import os
+# 定义一个用于操作的目录路径
+DirPath = os.path.dirname(os.path.abspath(__file__))
+os.chdir(DirPath)
+print("当前工作目录:", os.getcwd())
+
+
 # ClientSession 表示客户端会话，用于与服务器交互
 # StdioServerParameters 定义与服务器的 stdio 连接参数
 # stdio_client 提供与服务器的 stdio 连接上下文管理器
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 import asyncio
+from pprint import pprint
+import json
 
 
 
@@ -32,10 +41,13 @@ async def run():
 
             # 请求服务器列出所有支持的 tools
             tools = await session.list_tools()
-            print(f"Supported tools:{tools}/n/n")
+            # print(f"Supported tools:{tools}/n/n")
+            print(f"Supported tools:")
+            pprint(tools.model_dump())
+
 
             with open("output.txt", 'w', encoding='utf-8') as file:
-                file.write(str(tools))
+                file.write(json.dumps(tools.model_dump(), ensure_ascii=False, indent=4))
 
 
             # 文件相关功能测试

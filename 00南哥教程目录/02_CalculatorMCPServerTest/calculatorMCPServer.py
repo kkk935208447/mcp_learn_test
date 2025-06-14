@@ -3,6 +3,9 @@ from asyncio import timeout
 
 from mcp.server.fastmcp import FastMCP
 from mcp.types import TextContent
+from typing import Annotated
+from pydantic import Field
+
 
 # 日志相关配置
 logging.basicConfig(
@@ -14,18 +17,38 @@ logger = logging.getLogger("calculator_mcp_server")
 # 初始化 FastMCP 服务器，指定服务名称为 "calculator"
 mcp = FastMCP("calculator")
 
-# 定义加法工具函数
-@mcp.tool()
-async def add(a: float, b: float) -> list[TextContent]:
-    """执行加法运算
 
-    Args:
-        a: 第一个数字
-        b: 第二个数字
-    """
+
+
+# NOTE 第一种写法
+# 定义加法工具函数
+# @mcp.tool()
+# async def add(a: float, b: float) -> list[TextContent]:
+#     """执行加法运算
+
+#     Args:
+#         a: 第一个数字
+#         b: 第二个数字
+#     """
+#     logger.info(f"Add operation: {a} + {b}")
+#     result = a + b
+#     return [TextContent(type="text", text=str(result))]
+
+
+
+
+# NOTE 第二种写法
+@mcp.tool(name="add", description="执行加法运算")
+async def add(a: Annotated[float, Field(description="第一个数字")], 
+              b: Annotated[float, Field(description="第二个数字")]) -> \
+                list[TextContent]:
+    """加法"""
+
     logger.info(f"Add operation: {a} + {b}")
     result = a + b
     return [TextContent(type="text", text=str(result))]
+
+
 
 # 定义减法工具函数
 @mcp.tool()
@@ -68,7 +91,11 @@ async def divide(a: float, b: float) -> list[TextContent]:
     result = a / b
     return [TextContent(type="text", text=str(result))]
 
+
+
+
 # 主程序入口
 if __name__ == "__main__":
     # 初始化并运行 FastMCP 服务器，使用标准输入输出作为传输方式
+    print("Calculator MCP Server is running...")
     mcp.run(transport='stdio')
