@@ -6,7 +6,7 @@ import asyncio
 async def run():
 
     # 创建与服务器的SSE连接，并返回 read_stream 和 write_stream 流
-    async with sse_client(url="https://mcp.amap.com/sse?key=9bc2bca80b67ecc80a4943313b6053cf") as (read_stream, write_stream):
+    async with sse_client(url="https://mcp.amap.com/sse?key=3f4440421c6d277e3960f04e1080f31d") as (read_stream, write_stream):
         # # 创建一个客户端会话对象，通过 read_stream 和 write_stream 流与服务器交互
         async with ClientSession(read_stream, write_stream) as session:
             # 向服务器发送初始化请求，确保连接准备就绪
