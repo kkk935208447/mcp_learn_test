@@ -1,4 +1,4 @@
-from mcp.client.sse import sse_client
+from mcp.client.sse import sse_client    # sse 客户端
 from mcp import ClientSession
 import asyncio
 

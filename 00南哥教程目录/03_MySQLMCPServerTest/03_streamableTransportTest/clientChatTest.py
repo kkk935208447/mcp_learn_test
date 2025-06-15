@@ -5,12 +5,12 @@ print("当前工作目录：", os.getcwd())
 import asyncio
 import json
 import logging
-from typing import Dict, List, Optional, Any
+from typing import Dict, List, Optional, Any    # 导入类型提示所需的类型
 import requests
 from dotenv import load_dotenv
 from mcp import ClientSession
-from mcp.client.sse import sse_client
-from mcp.client.streamable_http import streamablehttp_client
+from mcp.client.sse import sse_client    # sse 客户端
+from mcp.client.streamable_http import streamablehttp_client    # streamablehttp 客户端
 
 # 配置日志记录
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
