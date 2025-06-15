@@ -238,5 +238,12 @@ async def call_tool(name: str, arguments: dict) -> list[TextContent]:
 
 
 if __name__ == "__main__":
-    # Initialize and run the server
-    mcp.run(transport="sse")
+
+    pass
+
+
+
+
+
+    # # Initialize and run the server
+    # mcp.run(transport="sse")

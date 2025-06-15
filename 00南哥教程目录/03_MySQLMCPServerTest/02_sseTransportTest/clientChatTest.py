@@ -1,7 +1,11 @@
+import os
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+print("当前工作目录：", os.getcwd())
+
+
 import asyncio
 import json
 import logging
-import os
 from typing import Dict, List, Optional, Any
 import requests
 from dotenv import load_dotenv
@@ -269,19 +273,33 @@ class Tool:
     # 将工具的信息格式化为一个字符串，适合语言模型（LLM）使用
     # 返回值: 包含工具名称、描述和参数信息的格式化字符串
     def format_for_llm(self) -> str:
-        args_desc = []
-        if 'properties' in self.input_schema:
-            for param_name, param_info in self.input_schema['properties'].items():
-                arg_desc = f"- {param_name}: {param_info.get('description', 'No description')}"
-                if param_name in self.input_schema.get('required', []):
-                    arg_desc += " (required)"
-                args_desc.append(arg_desc)
+        # args_desc = []
+        # if 'properties' in self.input_schema:
+        #     for param_name, param_info in self.input_schema['properties'].items():
+        #         arg_desc = f"- {param_name}: {param_info.get('description', 'No description')}"
+        #         if param_name in self.input_schema.get('required', []):
+        #             arg_desc += " (required)"
+        #         args_desc.append(arg_desc)
+        
+        # return f"""
+        #         Tool: {self.name}
+        #         Description: {self.description}
+        #         Arguments:
+        #         {chr(10).join(args_desc)}
+        #         """
+    
 
+        argu = {
+            "type": self.input_schema.get("type", "object"),
+            "properties": self.input_schema.get("properties", {}),
+            "required": self.input_schema.get("required", []),
+            "additionalProperties": self.input_schema.get("additionalProperties", False)
+        }
         return f"""
                 Tool: {self.name}
                 Description: {self.description}
                 Arguments:
-                {chr(10).join(args_desc)}
+                {json.dumps(argu) + chr(10)}
                 """
 
 

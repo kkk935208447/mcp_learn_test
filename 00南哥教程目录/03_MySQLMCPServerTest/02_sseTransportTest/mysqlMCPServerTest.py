@@ -19,7 +19,7 @@ async def run():
             print(f"Supported resources:{resources}/n/n")
 
             # 获取某具体资源 即某张表中的内容
-            resources = await session.read_resource('mysql://students_info/data')
+            resources = await session.read_resource('mysql://table1/data')
             print(f"Supported resources:",resources)
             # with open("output.txt", 'w', encoding='utf-8') as file:
             #     file.write(str(resources))
@@ -32,7 +32,7 @@ async def run():
 
             # 工具功能测试
             # result = await session.call_tool("execute_sql",{"query":"SHOW TABLES"})
-            result = await session.call_tool("execute_sql",{"query":"SELECT * FROM students_info"})
+            result = await session.call_tool("execute_sql",{"query":"SELECT * FROM table1"})
             print(f"Supported result:{result}")
 
 
