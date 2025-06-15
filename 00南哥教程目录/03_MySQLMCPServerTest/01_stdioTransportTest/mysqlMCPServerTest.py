@@ -1,3 +1,8 @@
+import os
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+print("当前工作目录：", os.getcwd())
+
+
 # ClientSession 表示客户端会话，用于与服务器交互
 # StdioServerParameters 定义与服务器的 stdio 连接参数
 from mcp import ClientSession, StdioServerParameters
@@ -33,7 +38,7 @@ async def run():
             print(f"Supported resources:{resources}/n/n")
 
             # 获取某具体资源 即某张表中的内容
-            resources = await session.read_resource('mysql://students_info/data')
+            resources = await session.read_resource('mysql://table1/data')
             print(f"Supported resources:",resources)
             # with open("output.txt", 'w', encoding='utf-8') as file:
             #     file.write(str(resources))
@@ -46,7 +51,7 @@ async def run():
 
             # 工具功能测试
             # result = await session.call_tool("execute_sql",{"query":"SHOW TABLES"})
-            result = await session.call_tool("execute_sql",{"query":"SELECT * FROM students_info"})
+            result = await session.call_tool("execute_sql",{"query":"SELECT * FROM table1"})
             print(f"Supported result:{result}")
 
 
